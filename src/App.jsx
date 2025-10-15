@@ -4,6 +4,7 @@ import Card from "./components/Card";
 import EstanteManga from "./components/EstanteManga";
 import EstanteFoda from "./components/EstanteFoda";
 import Escritor from "./components/Escritor";
+import Livros from "./components/Livros";
 
 const AppContainer = styled.div`
   width: 100vw;
@@ -29,7 +30,7 @@ function App() {
     <AppContainer>
       <Header />
       <Destaque>Destaques da Semana</Destaque>
-      <Card />
+      <Livros/>
       <EstanteTitulo>
         ESTANTE
       </EstanteTitulo>
