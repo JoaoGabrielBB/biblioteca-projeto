@@ -1,0 +1,163 @@
+🧩 CÓDIGO COMENTADO E EXPLICADO
+// Importa os hooks 'useEffect' e 'useState' do React
+// - useState: para armazenar e gerenciar os dados (livros)
+// - useEffect: para executar ações assim que o componente é montado (carregar livros da API)
+import { useEffect, useState } from "react";
+
+// Importa 'styled' do styled-components, usado para criar componentes React com CSS embutido
+import styled from "styled-components";
+
+// Importa sua instância do Axios configurada (geralmente com baseURL definida)
+import api from "../../services/api";
+
+🎨 ESTILIZAÇÃO DO CARROSSEL
+// =======================
+// ESTILIZAÇÃO DO CARROSSEL
+// =======================
+
+// ListaLivros → container principal que comporta as capas em formato de lista (<ul>)
+const ListaLivros = styled.ul`
+  display: flex;                /* Exibe os itens lado a lado (layout horizontal) */
+  gap: 0.9em;                   /* Espaçamento entre cada capa */
+  padding: 0.5em;               /* Espaço interno do container */
+  list-style: none;             /* Remove os marcadores de lista */
+  overflow-x: auto;             /* Habilita rolagem horizontal se o conteúdo ultrapassar a largura */
+  scroll-behavior: smooth;      /* Faz a rolagem ficar suave */
+  background-color: #AF6363;    /* Cor de fundo */
+  margin: 0.3em;                /* Margem externa */
+
+  /* Esconde a barra de rolagem, deixando apenas a rolagem pelo mouse ou toque */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+
+➡️ Função: essa parte cria o carrossel visualmente.
+A lista (ul) se comporta como uma faixa horizontal, onde as capas deslizam suavemente sem mostrar a barra de rolagem.
+
+// Cada capa de livro individual (um <li> dentro da <ul>)
+const ItemLivro = styled.li`
+  flex: 0 0 auto;               /* Garante que o item mantenha tamanho fixo e não encolha */
+  scroll-snap-align: center;    /* Faz com que o item se alinhe no centro ao rolar */
+`;
+
+
+➡️ Função: define como cada "item" (livro) vai se comportar no carrossel.
+Cada item mantém sua largura e é tratado como um "bloco fixo" dentro do container rolável.
+
+// Define o estilo da imagem da capa do livro
+const CapaLivro = styled.img`
+  height: 90px;                 /* Define a altura da capa (as larguras se ajustam automaticamente) */
+  border-radius: 6px;           /* Deixa as bordas levemente arredondadas */
+  transition: transform 0.2s;   /* Animações suaves quando algo muda (como hover) */
+  cursor: pointer;              /* Mostra o ícone de clique quando o usuário passa o mouse */
+
+  &:hover {
+    transform: scale(1.1);      /* Aumenta levemente o tamanho ao passar o mouse */
+  }
+`;
+
+
+➡️ Função: aqui a imagem do livro ganha estilo, interatividade e animação.
+O hover ajuda a destacar o item selecionado, dando uma sensação mais “viva” ao carrossel.
+
+⚙️ LÓGICA DO COMPONENTE (React)
+// =======================
+// COMPONENTE PRINCIPAL
+// =======================
+function CarrosselLivros() {
+  // useState cria uma variável 'livros' e uma função 'setLivros' para atualizá-la
+  // Começa vazia até os dados serem carregados da API
+  const [livros, setLivros] = useState([]);
+
+
+➡️ Função: livros guarda o estado atual da lista de livros.
+setLivros é usada para atualizar esse estado depois que os dados vêm da API.
+
+  // useEffect é executado apenas uma vez (porque o array [] está vazio)
+  // Serve para buscar os livros assim que o componente for montado na tela
+  useEffect(() => {
+    const carregarLivros = async () => {
+      try {
+        // Faz a requisição GET para a rota /livros da sua API
+        const response = await api.get("/livros");
+
+        // Embaralha os livros de forma aleatória (Math.random() - 0.5 gera um número entre -0.5 e 0.5)
+        // Depois pega apenas os 9 primeiros do array embaralhado
+        const livrosAleatorios = response.data
+          .sort(() => Math.random() - 0.5)
+          .slice(0, 9);
+
+        // Atualiza o estado 'livros' com o novo array de livros aleatórios
+        setLivros(livrosAleatorios);
+      } catch (error) {
+        // Caso algo dê errado (como erro 404 ou problema de conexão)
+        console.error("Erro ao carregar livros:", error);
+      }
+    };
+
+    // Chama a função que busca e define os livros
+    carregarLivros();
+  }, []);
+
+
+➡️ Função geral do trecho acima:
+Assim que o componente é exibido na tela:
+
+A função carregarLivros() é executada.
+
+Ela chama a API /livros usando o Axios.
+
+Os livros retornados são embaralhados e limitados a 9.
+
+O resultado é salvo em setLivros, o que re-renderiza o componente com os livros carregados.
+
+O [] no final garante que isso aconteça apenas uma vez (como um “onLoad”).
+
+  // Renderização condicional: enquanto os livros ainda não foram carregados
+  if (livros.length === 0) return <p>Carregando livros...</p>;
+
+
+➡️ Função: evita que o React tente exibir algo antes da API responder.
+Enquanto livros estiver vazio, mostra o texto “Carregando livros...”.
+
+  return (
+    <ListaLivros>
+      {livros.map((livro) => (
+        <ItemLivro key={livro.id}>
+          <CapaLivro
+            src={`http://localhost:3000/${livro.foto}`} // Caminho completo da imagem retornada pela API
+            alt={livro.titulo}                         // Texto alternativo para acessibilidade
+          />
+        </ItemLivro>
+      ))}
+    </ListaLivros>
+  );
+}
+
+
+➡️ Função:
+
+Percorre o array livros e cria um <ItemLivro> para cada um.
+
+Dentro dele, renderiza a <CapaLivro> com a imagem do servidor (livro.foto).
+
+A key={livro.id} ajuda o React a identificar cada item de forma única (evita re-renderizações desnecessárias).
+
+export default CarrosselLivros;
+
+
+➡️ Função:
+Exporta o componente para ser usado em outras partes do projeto (por exemplo, em uma página principal ou seção de “destaques”).
+
+🧠 RESUMO DIDÁTICO
+Conceito	O que faz	Onde aparece
+useState	Armazena o estado dos livros	const [livros, setLivros] = useState([])
+useEffect	Executa a busca de dados assim que o componente carrega	useEffect(() => { ... }, [])
+Axios (api)	Faz requisições HTTP para o backend	api.get("/livros")
+styled-components	Cria componentes com CSS embutido	`const ListaLivros = styled.ul``
+Renderização condicional	Mostra uma mensagem enquanto os dados não chegam	if (livros.length === 0)
+Map	Gera os elementos do carrossel com base nos dados	{livros.map((livro) => ...)}
+Math.random() - 0.5	Embaralha o array de livros	.sort(() => Math.random() - 0.5)
+slice(0, 9)	Seleciona apenas 9 livros	.slice(0, 9)

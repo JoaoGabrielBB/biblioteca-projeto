@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import Header from "./components/Header";
 import Card from "./components/Card";
-import EstanteManga from "./components/EstanteManga";
-import EstanteFoda from "./components/EstanteFoda";
+import CarrosselLivros from "./components/CarrosselLivros";
 import Escritor from "./components/Escritor";
 import Livros from "./components/Livros";
+import Autores from "./components/Autores";
 
 const AppContainer = styled.div`
   width: 100vw;
@@ -34,12 +34,12 @@ function App() {
       <EstanteTitulo>
         ESTANTE
       </EstanteTitulo>
-    <EstanteManga />
-    <EstanteFoda />
+    <CarrosselLivros />
+    <CarrosselLivros />
     <Destaque>
       ESCRITOR DESTAQUE
     </Destaque>
-    <Escritor />
+    <Autores />
     </AppContainer>
 
   );
