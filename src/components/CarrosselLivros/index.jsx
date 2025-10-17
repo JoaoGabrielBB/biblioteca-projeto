@@ -2,6 +2,7 @@
 // - useState: para armazenar e gerenciar os dados (livros)
 // - useEffect: para executar ações assim que o componente é montado (carregar livros da API)
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 // Importa 'styled' do styled-components, usado para criar componentes React com CSS embutido
 import styled from "styled-components";
@@ -55,6 +56,7 @@ function CarrosselLivros() {
   // useState cria uma variável 'livros' e uma função 'setLivros' para atualizá-la
   // Começa vazia até os dados serem carregados da API
   const [livros, setLivros] = useState([]);
+  const navigate = useNavigate();
 
   // useEffect é executado apenas uma vez (porque o array [] está vazio)
   // Serve para buscar os livros assim que o componente for montado na tela
@@ -92,6 +94,7 @@ return (
           <CapaLivro
             src={`http://localhost:3000/${livro.foto}`} // Caminho completo da imagem retornada pela API
             alt={livro.titulo}                         // Texto alternativo para acessibilidade
+            onClick={() => navigate(`/ficha/${livro.id}`)} // ← redireciona ao clicar
           />
         </ItemLivro>
       ))}

@@ -3,6 +3,9 @@ import Logo from "../Logo";
 import user from "../../assets/icons/Usuario.png"
 import Input from "../Input";
 
+
+
+
 const HeaderContainer = styled.header`
     background-color: #929AAB;
     color: #000; /* garante que o texto fique visível */
@@ -20,7 +23,7 @@ const UserImg = styled.img`
 function Header(){
     return(
         <HeaderContainer>
-            <Logo/>
+            <Logo />
             <Input />
             <UserImg 
                 src={user}

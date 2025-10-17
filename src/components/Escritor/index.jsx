@@ -3,12 +3,10 @@ import styled from "styled-components";
 const EscritorContainer = styled.div`
   background-color: #fff;
   margin: 1em auto;
-  padding: 1em;
   display: flex;
   justify-content: center;
   border-radius: 15px;
   width: 90%;
-  max-width: 600px; /* evita que fique gigante em telas grandes */
   box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 `;
 
@@ -27,7 +25,7 @@ const Biografia = styled.div`
 `;
 
 const TituloDestaque = styled.h2`
-  font-size: 18px;
+  font-size: 22px;
   margin-bottom: 0.5em;
 `;
 
@@ -37,15 +35,13 @@ const TextoBiografia = styled.p`
   line-height: 1.4;
 `;
 
-const LivroDestaque = styled.img`
-  height: 150px;
-  border-radius: 5px;
-`;
 
 const EscritorDestaque = styled.img`
   margin-top: 1em;
   height: 150px;
   border-radius: 8px;
+  position: relative;
+  z-index: 1; /* menor que o rodapé */
 `;
 
 function Escritor({ nome, foto, biografia_resumo }) {
@@ -56,14 +52,11 @@ function Escritor({ nome, foto, biografia_resumo }) {
         <Biografia>
           <TituloDestaque>{nome}</TituloDestaque>
           <TextoBiografia>{ biografia_resumo}</TextoBiografia>
-          <EscritorDestaque
+        </Biografia>
+                  <EscritorDestaque
             src={`http://localhost:3000/${foto}`}
             alt={nome}
           />
-        </Biografia>
-
-        {/* Lado direito → (opcional) poderia ser o livro mais famoso */}
-        <LivroDestaque src={`http://localhost:3000/${foto}`} alt="Livro do autor" />
       </EscritorConteudo>
     </EscritorContainer>
   );

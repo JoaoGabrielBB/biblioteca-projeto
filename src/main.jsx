@@ -1,7 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { createGlobalStyle } from 'styled-components';
+import Home from './paginas/Home';
+import Rodape from './components/Rodape';
+import Header from './components/Header';
+import FichaLivro from './paginas/FichaLivro';
 
 
 const GlobalStyle = createGlobalStyle`
@@ -25,8 +29,17 @@ code {
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    <BrowserRouter>
     <GlobalStyle />
-    <App />
+      <Header/>
+ 
+        <Routes>
+          <Route path="/" element={<Home />}/>
+          <Route path="/ficha/:id" element={<FichaLivro/>}/>
+        </Routes>
+
+      <Rodape/> 
+    </BrowserRouter>
   </React.StrictMode>
 );
 

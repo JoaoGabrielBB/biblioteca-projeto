@@ -1,34 +1,31 @@
 import styled from "styled-components";
-import Header from "./components/Header";
-import Card from "./components/Card";
-import CarrosselLivros from "./components/CarrosselLivros";
-import Escritor from "./components/Escritor";
-import Livros from "./components/Livros";
-import Autores from "./components/Autores";
+import CarrosselLivros from "../components/CarrosselLivros";
+import Livros from "../components/Livros";
+import Autores from "../components/Autores";
 
 const AppContainer = styled.div`
   width: 100vw;
-  height: 100vh;
-  background: #D9D9D9
-  color: #000
+  min-height: 100vh; /* permite crescer conforme o conteúdo */
+  background: #d9d9d9;
+  color: #000;
   display: flex;
-  align-items: center;
-  text-align: center
+  flex-direction: column; /* empilha tudo em coluna */
+  text-align: center;
+  padding-bottom: 80px; /* espaço extra antes do rodapé */
   
 `
 
 const Destaque = styled.h2`
-  fontsize: 20px
+  fontsize: 20px;
 `
 const EstanteTitulo = styled.h2`
-  fontsize: 20px
+  fontsize: 20px;
 
 `
 
-function App() {
+function Home() {
   return (
     <AppContainer>
-      <Header />
       <Destaque>Destaques da Semana</Destaque>
       <Livros/>
       <EstanteTitulo>
@@ -45,4 +42,4 @@ function App() {
   );
 }
 
-export default App;
+export default Home;
