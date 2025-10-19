@@ -7,7 +7,8 @@ const StyledWrapper = styled.div`
     align-items: center;
     text-align: center;
     margin: 0 4.5em 0 3.1em;
-   
+  
+
 
   }
 
@@ -21,6 +22,11 @@ const StyledWrapper = styled.div`
     margin-right: -2.5rem;
     height: 30px;
     width: 10rem;
+
+  @media (min-width: 1024px) {
+    height: 3rem;
+    width: 50rem;
+  }
   }
 
   .search__input::-webkit-input-placeholder {

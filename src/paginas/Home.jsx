@@ -12,6 +12,7 @@ const AppContainer = styled.div`
   flex-direction: column; /* empilha tudo em coluna */
   text-align: center;
   padding-bottom: 80px; /* espaço extra antes do rodapé */
+  font-family: "Roboto", sans-serif;
   
 `
 

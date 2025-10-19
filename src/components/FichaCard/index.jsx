@@ -1,8 +1,56 @@
 // Importa hooks do React: useState para armazenar estado, useEffect para efeitos colaterais (como buscar dados da API)
 import { useEffect, useState } from "react";
+import styled from "styled-components";
 
 // Importa a instância do axios configurada para fazer requisições à API
 import api from "../../services/api";
+import BotoesAcoes from "../BotoesAcoes";
+
+
+const FichaCardContainer = styled.div`
+  background-color: #393E46;
+  margin: 1em auto;
+  padding: 1em;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 600px; // evita que fique gigante em telas grandes
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  color: #fff;
+
+`
+const LivroTitulo = styled.h1`
+  font-size: 26px;
+  
+
+`
+
+const CapaLivro = styled.img`
+  height: 250px;
+  width: 50%;
+  margin-bottom: 1em; 
+  border-radius: 5px;
+
+  @media (min-width: 1024px) {
+    width: 50%; // largura fixa no desktop
+    height: 310px; // altura maior
+    object-fit: contain; // mantém proporção sem cortar
+  }
+  
+`
+
+const InfoLivro = styled.p`
+  margin: 0 5em 0 5em;
+
+
+`
+
+const SinopseLivro = styled.p`
+ marginTop: 1em;
+
+`
 
 // Componente FichaCard recebe uma prop chamada 'id', que indica qual livro deve ser exibido
 function FichaCard({ id }) {
@@ -36,20 +84,23 @@ function FichaCard({ id }) {
 
   // Renderiza os dados do livro quando ele já foi carregado
   return (
-    <div style={{ padding: "2em" }}>
+    <FichaCardContainer>
       {/* Exibe o título do livro */}
-      <h1>{livro.titulo}</h1>
+      <LivroTitulo>{livro.titulo}</LivroTitulo>
 
       {/* Exibe a imagem do livro */}
-      <img
+      <CapaLivro
         src={`http://localhost:3000/${livro.foto}`} // caminho da imagem retornada pela API
         alt={livro.titulo}                           // alt para acessibilidade
-        style={{ height: "250px", borderRadius: "10px" }} // estilo inline
       />
 
-      {/* Exibe o resumo do livro */}
-      <p style={{ marginTop: "1em" }}>{livro.resumo}</p>
-    </div>
+      <InfoLivro>Autor(a): {livro.autor?.nome}</InfoLivro>
+      <InfoLivro>Editora: {livro.editora?.nome}</InfoLivro>
+      <InfoLivro>Genero: {livro.genero?.nome}</InfoLivro>
+      {/* Exibe a sinopse do livro */}
+      <SinopseLivro>{livro.sinopse}</SinopseLivro>
+      <BotoesAcoes/>
+    </FichaCardContainer>
   );
 }
 

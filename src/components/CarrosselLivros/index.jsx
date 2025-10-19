@@ -15,37 +15,59 @@ import api from "../../services/api";
 // =======================
 
 // ListaLivros → container principal que comporta as capas em formato de lista (<ul>)
+// Container do carrossel (ul)
 const ListaLivros = styled.ul`
-  display: flex;                /* Exibe os itens lado a lado (layout horizontal) */
-  gap: 0.9em;                   /* Espaçamento entre cada capa */
-  padding: 0.5em;               /* Espaço interno do container */
-  list-style: none;             /* Remove os marcadores de lista */
-  overflow-x: auto;             /* Habilita rolagem horizontal se o conteúdo ultrapassar a largura */
-  scroll-behavior: smooth;      /* Faz a rolagem ficar suave */
-  background-color: #AF6363;    /* Cor de fundo */
-  margin: 0.3em;                /* Margem externa */
+  display: flex;                
+  gap: 0.9em;                   
+  padding: 0.5em;               
+  list-style: none;             
+  overflow-x: auto;             
+  scroll-behavior: smooth;      
+  background-color: #AF6363;    
+  margin: 0.3em;
 
-  /* Esconde a barra de rolagem, deixando apenas a rolagem pelo mouse ou toque */
   &::-webkit-scrollbar {
     display: none;
   }
+
+  @media (min-width: 768px) {
+    gap: 1.2em; // mais espaçamento entre capas no tablet
+    padding: 1em; // mais padding interno
+  }
+
+  @media (min-width: 1024px) {
+    gap: 1.5em; 
+    padding: 1.5em;
+  }
 `;
 
-// Cada capa de livro individual (um <li> dentro da <ul>)
+// Cada item (li)
 const ItemLivro = styled.li`
-  flex: 0 0 auto;               /* Garante que o item mantenha tamanho fixo e não encolha */
-  scroll-snap-align: center;    /* Faz com que o item se alinhe no centro ao rolar */
+  flex: 0 0 auto;               
+  scroll-snap-align: center;    
+
+  @media (min-width: 768px) {
+    flex: 0 0 auto; // mantém tamanho fixo
+  }
 `;
 
-// Define o estilo da imagem da capa do livro
+// Imagem da capa
 const CapaLivro = styled.img`
-  height: 90px;                 /* Define a altura da capa (as larguras se ajustam automaticamente) */
-  border-radius: 6px;           /* Deixa as bordas levemente arredondadas */
-  transition: transform 0.2s;   /* Animações suaves quando algo muda (como hover) */
-  cursor: pointer;              /* Mostra o ícone de clique quando o usuário passa o mouse */
+  height: 90px;                 
+  border-radius: 6px;           
+  transition: transform 0.2s;   
+  cursor: pointer;              
 
   &:hover {
-    transform: scale(1.1);      /* Aumenta levemente o tamanho ao passar o mouse */
+    transform: scale(1.1);      
+  }
+
+  @media (min-width: 768px) {
+    height: 130px; // capas maiores em tablet
+  }
+
+  @media (min-width: 1024px) {
+    height: 180px; // capas ainda maiores em desktop
   }
 `;
 
@@ -70,7 +92,7 @@ function CarrosselLivros() {
         // Depois pega apenas os 9 primeiros do array embaralhado
         const livrosAleatorios = response.data
           .sort(() => Math.random() - 0.5)
-          .slice(0, 9);
+          .slice(0, 16);
 
         // Atualiza o estado 'livros' com o novo array de livros aleatórios
         setLivros(livrosAleatorios);
@@ -94,7 +116,7 @@ return (
           <CapaLivro
             src={`http://localhost:3000/${livro.foto}`} // Caminho completo da imagem retornada pela API
             alt={livro.titulo}                         // Texto alternativo para acessibilidade
-            onClick={() => navigate(`/ficha/${livro.id}`)} // ← redireciona ao clicar
+            onClick={() => navigate(`/livro/${livro.id}`)} // ← redireciona ao clicar
           />
         </ItemLivro>
       ))}

@@ -28,10 +28,10 @@ function Autores() {
 
   return (
     <Escritor
-      key={autor.id}
-      nome={autor.nome}
-      biografia_resumo={autor.biografia_resumo}
-      foto={autor.foto}
+    id={autor.id}
+    nome={autor.nome}
+    foto={autor.foto}
+    biografia_resumo={autor.biografia_resumo}
     />
   );
 }

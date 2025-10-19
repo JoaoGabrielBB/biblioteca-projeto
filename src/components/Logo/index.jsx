@@ -10,14 +10,18 @@ const LogoContainer = styled.div`
 
 const LogoProjeto = styled.img`
     height: 50px;
+    @media (min-width: 1024px) {
+    height: 100px;
+  }
     
 `
 
-function Logo() {
+function Logo({ onClick }) {
     return(
         <LogoContainer>
             <LogoProjeto 
                 src={logo}
+                onClick={onClick} style={{ cursor: "pointer" }} 
             />
         </LogoContainer>
 

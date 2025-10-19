@@ -6,13 +6,16 @@ import Home from './paginas/Home';
 import Rodape from './components/Rodape';
 import Header from './components/Header';
 import FichaLivro from './paginas/FichaLivro';
+import FichaAutor from './paginas/FichaAutor';
+
 
 
 const GlobalStyle = createGlobalStyle`
 body {
+  @import url('https://fonts.googleapis.com/css2?family=Krona+One&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', 'Krona One',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -20,7 +23,7 @@ body {
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+    monospace, 'Roboto', 'Krona One';
 }
 
 
@@ -35,7 +38,10 @@ root.render(
  
         <Routes>
           <Route path="/" element={<Home />}/>
-          <Route path="/ficha/:id" element={<FichaLivro/>}/>
+          <Route path="/livro/:id" element={<FichaLivro/>}/>
+          <Route path="/autor/:id" element={<FichaAutor/>}/>
+          
+          
         </Routes>
 
       <Rodape/> 
